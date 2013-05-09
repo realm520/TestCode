@@ -16,4 +16,5 @@ Prerequisite
 Geting Started
 --------------
 
- 
+  * make
+  * LD_LIBRARY_PATH=lib/lib ./test
