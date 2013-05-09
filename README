@@ -7,6 +7,12 @@ Introduction
   This project is a collection of personal test code.
 
 
+Prerequisite
+------------
+
+  * g++
+  * Google Test Library
+
 Geting Started
 --------------
 
