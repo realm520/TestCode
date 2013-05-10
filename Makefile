@@ -12,8 +12,13 @@ all: test
 TestCpp.o: src/TestCpp.cpp
 	$(CXX) $(INCLUDE_DIR) $(DEBUG) -c -o $@ $<
 
-test: TestCpp.o
+TestBase64.o: src/TestBase64.cpp
+	$(CXX) $(INCLUDE_DIR) $(DEBUG) -c -o $@ $<
+
+test: TestCpp.o TestBase64.o
 	$(CXX) $(INCLUDE_DIR) -L $(LIB_PATH) $(LIBS) $(DEBUG) -o $@ $^
+
+.PHONY: all clean
 
 clean:
 	rm -f test *.o
