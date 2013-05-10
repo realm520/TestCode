@@ -10,6 +10,7 @@ Introduction
 Prerequisite
 ------------
 
+  * Ubuntu 12.04 LTS
   * g++
   * Google Test Library
 

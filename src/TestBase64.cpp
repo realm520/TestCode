@@ -56,7 +56,7 @@ TEST_F(TestBase64, testEncode) {
     int len = strlen((const char *)str);
     int encoded_len = (len / 3 + 1) * 4 + 1;
     unsigned char *buf = new unsigned char [encoded_len];
-    memset(buf, 0, sizeof(buf));
+    memset(buf, 0, encoded_len);
     int offset = 0;
     int remain = len;
     do {
