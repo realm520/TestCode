@@ -22,5 +22,5 @@ test: $(OBJ_FILES)
 .PHONY: all clean
 
 clean:
-	rm -f test *.o
+	rm -f test $(OBJ_FILES)
     
