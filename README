@@ -6,6 +6,12 @@ Introduction
 
   This project is a collection of personal test code.
 
+  Directories:
+
+  * include - header files of c/cpp test code
+  * src - source files of c/cpp test code
+  * sh - source files of shell test code
+
 
 Prerequisite
 ------------
@@ -13,6 +19,7 @@ Prerequisite
   * Ubuntu 12.04 LTS
   * g++
   * Google Test Library
+  * shunit2
 
 Geting Started
 --------------
