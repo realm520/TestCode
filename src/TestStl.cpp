@@ -28,9 +28,10 @@ class StaticMemberTemplateClass {
 public:
     static int _data;
 };
-template <typename T> int StaticMemberTemplateClass<int>::_data = 1;
+
+template <> int StaticMemberTemplateClass<int>::_data = 1;
 //This assignment override the previous one. Is this a bug?
-template <typename T> int StaticMemberTemplateClass<char>::_data = 2;
+template <> int StaticMemberTemplateClass<char>::_data = 2;
 
 TEST_F(TestStl, testStaticTemplateMember) {
     EXPECT_EQ(2, StaticMemberTemplateClass<int>::_data);

@@ -11,6 +11,7 @@ Introduction
   * include - header files of c/cpp test code
   * src - source files of c/cpp test code
   * sh - source files of shell test code
+  * ll - test code for Link & Load
 
 
 Prerequisite
@@ -20,6 +21,7 @@ Prerequisite
   * g++
   * Google Test Library
   * shunit2
+  * libexpat
 
 Geting Started
 --------------

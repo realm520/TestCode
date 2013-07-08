@@ -1,0 +1,7 @@
+ * NML *
+   1. h2xs -A -n NML -O --skip-ppport -x nml_wrapper.h -lexpat
+   2. mv nml_wrapper.[hc] NML/
+   3. cd NML
+   4. vi Makefile.PL (uncomment last line " OBJECT            => '$(O_FILES)'")
+   5. perl Makefile.PL
+   6. make && make test
