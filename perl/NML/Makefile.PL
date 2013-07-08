@@ -11,8 +11,6 @@ WriteMakefile(
        AUTHOR         => 'root <root@>') : ()),
     LIBS              => ['-lexpat '], # e.g., '-lm'
     DEFINE            => '', # e.g., '-DHAVE_SOMETHING'
-	# Insert -I. if you add *.h files later:
-    INC               => '', # e.g., '-I/usr/include/other'
-	# Un-comment this if you add C files to link with later:
+    INC               => '-I.', # e.g., '-I. -I/usr/include/other'
     OBJECT            => '$(O_FILES)', # link all the C files too
 );

@@ -1,7 +1,12 @@
 Changes
+Makefile
 Makefile.PL
 MANIFEST
+MYMETA.yml
 NML.xs
+nml_wrapper.c
+nml_wrapper.h
+pm_to_blib
 README
 typemap
 t/NML.t
