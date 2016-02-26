@@ -8,7 +8,7 @@ GTEST_LIB = $(LIB_PATH)/libgtest_main.a $(LIB_PATH)/libgtest.a -lpthread
 LIBS = $(GTEST_LIB)
 CXXFLAGS = $(DEBUG)
 
-SOURCE_FILES = $(wildcard src/*.cpp)
+SOURCE_FILES = $(wildcard src/T*.cpp)
 OBJ_FILES = $(SOURCE_FILES:.cpp=.o)
 
 all: test

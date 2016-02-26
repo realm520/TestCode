@@ -4,6 +4,7 @@
  *  Created on: 2014年4月12日
  *      Author: bill
  */
+#include <cstring>
 #include <iostream>
 
 #define KEY_BUF_LEN          128

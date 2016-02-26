@@ -1,193 +1,136 @@
-#include <sstream>
-#include <boost/algorithm/string.hpp>
+//////////////////////////////////////////////////////////////////////////////
+//
+// (C) Copyright Ion Gaztanaga 2006-2012. Distributed under the Boost
+// Software License, Version 1.0. (See accompanying file
+// LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+//
+// See http://www.boost.org/libs/interprocess for documentation.
+//
+//////////////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <boost/interprocess/detail/config_begin.hpp>
+#include <boost/interprocess/detail/workaround.hpp>
+//[doc_multi_index
+#include <boost/interprocess/managed_shared_memory.hpp>
+#include <boost/interprocess/allocators/allocator.hpp>
+#include <boost/interprocess/containers/string.hpp>
+
+//<-
+//Shield against external warnings
+#include <boost/interprocess/detail/config_external_begin.hpp>
+//->
+
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
-#include "Bmco/Util/IniFileConfiguration.h"
-#include "Bmco/NumberFormatter.h"
 
-using boost::multi_index_container;
-using namespace boost::multi_index;
+//<-
+#include <boost/interprocess/detail/config_external_end.hpp>
+#include "../test/get_process_id_name.hpp"
+//->
 
+using namespace boost::interprocess;
+namespace bmi = boost::multi_index;
 
-struct ChannelTable {
-    std::string channelId;
-    std::string channelName;
-    std::string channelDesc;
-    std::string sysType;
-    std::string subSysType;
-    std::string ruleType;
-    std::string beginDate;
-    std::string createDate;
-    std::string endDate;
-    std::string outFilePath;
-    std::string outHostName;
-    std::string outUserName;
-    std::string value1;
-    std::string value2;
-    std::string value3;
-    std::string value4;
-    std::string bolId;
-    std::string status;
+typedef managed_shared_memory::allocator<char>::type              char_allocator;
+typedef basic_string<char, std::char_traits<char>, char_allocator>shm_string;
 
-    ChannelTable() {
-    }
-
-    ChannelTable(const ChannelTable &c) : channelId(c.channelId), channelName(c.channelName),
-        channelDesc(c.channelDesc), sysType(c.sysType), subSysType(c.subSysType),
-        ruleType(c.ruleType), beginDate(c.beginDate), createDate(c.createDate),
-        endDate(c.endDate), outFilePath(c.outFilePath), outHostName(c.outHostName),
-        outUserName(c.outUserName), value1(c.value1), value2(c.value2), value3(c.value3),
-        value4(c.value4), bolId(c.bolId), status(c.status) {
-    }
-
-    friend std::ostream& operator<<(std::ostream& os, const ChannelTable& e) {
-        os << e.channelId << "|" << e.channelName << "|" << e.channelDesc << "|"
-            << e.sysType << "|" << e.subSysType << "|" << e.ruleType << "|" 
-            << e.beginDate << "|" << e.createDate << "|" << e.endDate << "|"
-            << e.outFilePath << "|" << e.outHostName << "|" << e.outUserName << "|"
-            << e.value1 << "|" << e.value2 << "|" << e.value3 << "|" << e.value4 << "|"
-            << e.bolId << "|" << e.status;
-        return os;
-    }
-
-    bool operator<(const ChannelTable &c) const {
-        return channelId < c.channelId;
-    }
+//Data to insert in shared memory
+struct employee
+{
+   int         id;
+   int         age;
+   //shm_string  name;
+   managed_shared_memory::handle_t handle; 
+   employee( int id_
+           , int age_
+           //, const char *name_
+           , managed_shared_memory::handle_t handle_)
+           //, const char_allocator &a)
+      : id(id_), age(age_), handle(handle_)
+   {}
 };
 
-struct cId{};
-struct bId{};
+//Tags
+struct id{};
+struct age{};
+struct name{};
 
-typedef
-boost::multi_index_container<
-    ChannelTable,
-    indexed_by<
-        //ordered_unique<tag<cId>, identity<ChannelTable> >,
-        ordered_unique<tag<cId>, member<ChannelTable, std::string, &ChannelTable::channelId> >,
-        ordered_non_unique<tag<bId>, member<ChannelTable, std::string, &ChannelTable::bolId> >
-    >
-> ChannelTableContainer;
+// Define a multi_index_container of employees with following indices:
+//   - a unique index sorted by employee::int,
+//   - a non-unique index sorted by employee::name,
+//   - a non-unique index sorted by employee::age.
+typedef bmi::multi_index_container<
+  employee,
+  bmi::indexed_by<
+    bmi::ordered_unique
+      <bmi::tag<id>,  BOOST_MULTI_INDEX_MEMBER(employee,int,id)>//,
+/*
+    bmi::ordered_non_unique<
+      bmi::tag<name>,BOOST_MULTI_INDEX_MEMBER(employee,shm_string,name)>,
+    bmi::ordered_non_unique
+      <bmi::tag<age>, BOOST_MULTI_INDEX_MEMBER(employee,int,age)>
+*/
+      >,
+  managed_shared_memory::allocator<employee>::type
+> employee_set;
 
-struct ChangeChannelFunctor {
-    ChangeChannelFunctor(const std::string &outFilePath, const std::string &outHostName,
-        const std::string &outUserName, const std::string &bolId) : newOutFilePath(outFilePath),
-        newOutHostName(outHostName), newOutUserName(outUserName), newBolId(bolId) {
-    }
+int main ()
+{
+   //Remove shared memory on construction and destruction
+   struct shm_remove
+   {
+   //<-
+   #if 1
+      shm_remove() { shared_memory_object::remove(test::get_process_id_name()); }
+      ~shm_remove(){ shared_memory_object::remove(test::get_process_id_name()); }
+   #else
+   //->
+      shm_remove() { shared_memory_object::remove("MySharedMemory"); }
+      ~shm_remove(){ shared_memory_object::remove("MySharedMemory"); }
+   //<-
+   #endif
+   //->
+   } remover;
+   //<-
+   (void)remover;
+   //->
 
-    void operator()(ChannelTable& c) {
-            c.outFilePath = newOutFilePath;
-            c.outHostName = newOutHostName;
-            c.outUserName = newOutUserName;
-            c.bolId = newBolId;
-    }
+   //Create shared memory
+   //<-
+   #if 1
+   managed_shared_memory segment(create_only,test::get_process_id_name(), 6553600000);
+   #else
+   //->
+   managed_shared_memory segment(create_only,"MySharedMemory", 65536);
+   //<-
+   #endif
+   //->
 
-private:
-    std::string newOutFilePath;
-    std::string newOutHostName;
-    std::string newOutUserName;
-    std::string newBolId;
-};
+    int num = 100000;
+    char bname[22*1024];
+    bname[22*1024-1] = '\0';
+    memset(bname, 'A', 22*1024-1);
+   //Construct the multi_index in shared memory
+   employee_set *es = segment.construct<employee_set>
+      ("My MultiIndex Container")            //Container's name in shared memory
+      ( employee_set::ctor_args_list()
+      , segment.get_allocator<employee>());  //Ctor parameters
 
-void reassignChannel(const std::string &bolIdBusy, const std::string &bolIdFree,
-    Bmco::AutoPtr<Bmco::Util::IniFileConfiguration> &config, int flag = 1) {
-    ChannelTableContainer ctc;
-    int channelCount = config->getInt("Table.Table.8.recordnum");
-    std::string recordPrefix("Table.Table.8.record.");
-    for (int i=1; i<=channelCount; i++) {
-        std::string record = config->getString(recordPrefix+Bmco::NumberFormatter::format(i));
-        std::vector<std::string> fields;
-        boost::algorithm::split(fields, record, boost::algorithm::is_any_of("|"));
-        ChannelTable ct;
-        ct.channelId = fields[0];
-        ct.channelName = fields[1];
-        ct.channelDesc = fields[2];
-        ct.sysType = fields[3];
-        ct.subSysType = fields[4];
-        ct.ruleType = fields[5];
-        ct.beginDate = fields[6];
-        ct.createDate = fields[7];
-        ct.endDate = fields[8];
-        ct.outFilePath = fields[9];
-        ct.outHostName = fields[10];
-        ct.outUserName = fields[11];
-        ct.value1 = fields[12];
-        ct.value2 = fields[13];
-        ct.value3 = fields[14];
-        ct.value4 = fields[15];
-        ct.bolId = fields[16];
-        ct.status = fields[17];
-        ctc.insert(ct);
-    }
-
-    ChannelTableContainer::nth_index<1>::type& ib= ctc.get<1>();
-
-    int busyCount = ib.count(bolIdBusy);
-    int freeCount = ib.count(bolIdFree);
-    //std::cout << "Number of channel with busy bolId [" << bolIdBusy << "]: " << busyCount << std::endl;
-    //std::cout << "Number of channel with free bolId [" << bolIdFree << "]: " << freeCount << std::endl;
-    int newBusyCount = 0;
-    if (flag == 1) { // reassign channel by mean
-        newBusyCount = (busyCount + freeCount) / 2;
-        ChannelTableContainer::index<bId>::type::iterator itFree = ib.find(bolIdFree);
-        if (itFree == ib.end()) {
-            std::cout << "error\n";
-            return;
-        }
-        ChannelTable tmpChannel(*itFree);
-        if (tmpChannel.status == "0") {
-            tmpChannel.status = "1";
-            ib.replace(itFree, tmpChannel);
-        }
-        while (busyCount > newBusyCount) {
-            ChannelTableContainer::index<bId>::type::iterator itr = ib.find(bolIdBusy);
-            if (!ib.modify(itr, ChangeChannelFunctor(tmpChannel.outFilePath, tmpChannel.outHostName,
-                tmpChannel.outUserName, tmpChannel.bolId))) {
-                std::cout << "Failed to update channel table." << std::endl;
-            }
-            busyCount--;
-        }
-    } else if (flag == 0) { // tack back channel from BOL
-        newBusyCount = busyCount + freeCount - 1;
-        ChannelTableContainer::index<bId>::type::iterator itBusy = ib.find(bolIdBusy);
-        if (itBusy == ib.end()) {
-            std::cout << "error\n";
-            return;
-        }
-        ChannelTable tmpChannel(*itBusy);
-        while (busyCount < newBusyCount) {
-            ChannelTableContainer::index<bId>::type::iterator itr = ib.find(bolIdFree);
-            if (!ib.modify(itr, ChangeChannelFunctor(tmpChannel.outFilePath, tmpChannel.outHostName,
-                tmpChannel.outUserName, tmpChannel.bolId))) {
-                std::cout << "Failed to update channel table." << std::endl;
-            }
-            busyCount++;
-        }
-        itBusy = ib.find(bolIdFree);
-        ChannelTable disabledChannel(*itBusy);
-        if (disabledChannel.status == "1") {
-            disabledChannel.status = "0";
-            ib.replace(itBusy, disabledChannel);
-        }
-    }
-    ChannelTableContainer::iterator it = ctc.begin();
-    int idx = 1;
-    std::ostringstream oss;
-    while (it != ctc.end()) {
-        oss << (*it);
-        config->setString(recordPrefix+Bmco::NumberFormatter::format(idx), oss.str());
-        oss.str("");
-        it++;
-        idx++;
-    }
-    config->save(std::cout);
+   //Now insert elements
+   char_allocator ca(segment.get_allocator<char>());
+   for (int i=0; i<num; ++i) {
+      void * shptr = segment.allocate(22*1024/*bytes to allocate*/);
+      memset(shptr, 'A', 22*1024);
+      managed_shared_memory::handle_t handle = segment.get_handle_from_address(shptr);
+        /*if (i == 1000) {
+            std::cout << (char*)segment.get_address_from_handle(handle) << std::endl;
+        }*/
+       es->insert(employee(i,31, handle));
+       //es->insert(employee(1,27, "Robert", ca));
+       //es->insert(employee(2,40, "John", ca));
+   }
+   return 0;
 }
-
-
-int main() {
-    std::string busy("bol2");
-    std::string free("bol3");
-    std::string path("./test.ini");
-    Bmco::AutoPtr<Bmco::Util::IniFileConfiguration> config = new Bmco::Util::IniFileConfiguration(path);
-    reassignChannel(busy, free, config);
-}
+//]
+#include <boost/interprocess/detail/config_end.hpp>
