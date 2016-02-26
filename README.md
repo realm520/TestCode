@@ -1,8 +1,10 @@
-TestCode
-========
+[TOC]
 
-Introduction
-------------
+# TestCode
+***
+
+## Introduction
+***
 
   This project is a collection of personal test code.
 
@@ -13,8 +15,8 @@ Introduction
   * lib - 3rd party libraries (not used now)
 
 
-Prerequisite
-------------
+## Prerequisite
+***
 
   * Ubuntu 12.04 LTS
   * g++
@@ -22,8 +24,8 @@ Prerequisite
   * shunit2
   * libexpat
 
-Geting Started
---------------
+## Geting Started
+***
 
   * clone https://github.com/google/googletest.git to local path
   * set GTEST_DIR=/path/to/googletest/googletest
