@@ -26,7 +26,7 @@
 
 //<-
 #include <boost/interprocess/detail/config_external_end.hpp>
-#include "../test/get_process_id_name.hpp"
+#include "get_process_id_name.hpp"
 //->
 
 using namespace boost::interprocess;

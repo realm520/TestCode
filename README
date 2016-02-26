@@ -27,5 +27,7 @@ Geting Started
 
   * clone https://github.com/google/googletest.git to local path
   * set GTEST_DIR=/path/to/googletest/googletest
+  * install boost to local path
+  * set BOOST_DIR=/path/to/boost and this path should have "include" and "lib" directory (or you can install boost to system path)
   * make
   * ./test
