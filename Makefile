@@ -19,6 +19,9 @@ all: test
 test: $(OBJ_FILES)
 	$(CXX) $(INCLUDE_DIR) -L $(LIB_PATH) $(LIBS) $(DEBUG) -o $@ $^
 
+test_multi_index: test_multi_index.cpp
+	$(CXX) $(INCLUDE_DIR) -L $(LIB_PATH) -lboost_system -lboost_timer -lrt -O3 -o $@ $^
+
 .PHONY: all clean
 
 clean:
