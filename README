@@ -8,10 +8,9 @@ Introduction
 
   Directories:
 
-  * include - header files of c/cpp test code
   * src - source files of c/cpp test code
   * sh - source files of shell test code
-  * ll - test code for Link & Load
+  * lib - 3rd party libraries (not used now)
 
 
 Prerequisite
@@ -26,5 +25,7 @@ Prerequisite
 Geting Started
 --------------
 
+  * clone https://github.com/google/googletest.git to local path
+  * set GTEST_DIR=/path/to/googletest/googletest
   * make
   * ./test
