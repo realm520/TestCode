@@ -19,7 +19,7 @@ std::cout << "__sgi" << std::endl;
 
 #   if defined(__GNUC__)
     EXPECT_EQ(4, __GNUC__);
-    EXPECT_EQ(2, __GNUC_MINOR__);
+    EXPECT_EQ(8, __GNUC_MINOR__);
 #   endif
 }
 
@@ -30,17 +30,17 @@ public:
 };
 
 template <> int StaticMemberTemplateClass<int>::_data = 1;
-//This assignment override the previous one. Is this a bug?
+//This assignment override the previous one. Is this a bug? -- fixed in gcc 4.8
 template <> int StaticMemberTemplateClass<char>::_data = 2;
 
 TEST_F(TestStl, testStaticTemplateMember) {
-    EXPECT_EQ(2, StaticMemberTemplateClass<int>::_data);
+    EXPECT_EQ(1, StaticMemberTemplateClass<int>::_data);
     EXPECT_EQ(2, StaticMemberTemplateClass<char>::_data);
 
     StaticMemberTemplateClass<int> obji1, obji2;
     StaticMemberTemplateClass<char> objc1, objc2;
-    EXPECT_EQ(2, obji1._data);
-    EXPECT_EQ(2, obji2._data);
+    EXPECT_EQ(1, obji1._data);
+    EXPECT_EQ(1, obji2._data);
     EXPECT_EQ(2, objc1._data);
     EXPECT_EQ(2, objc2._data);
 
