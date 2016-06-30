@@ -113,7 +113,25 @@ void testRvalueReferences()
 void testThreadConcurrency()
 {
     //输出CPU数量
-    std::cout << "Thread concurrency: " << std::thread::hardware_concurrency() << std::endl;
+    std::cout << "testThreadConcurrency:\n";
+    std::cout << "\tThread concurrency: " << std::thread::hardware_concurrency() << std::endl;
+}
+
+void testLambda()
+{
+    //嵌套的内部lambda表达式可以抓取最外部的变量
+    int outer = 10;
+    int m = [=](int x)
+    {
+        int inner = 20;
+        return [=](int y)
+        {
+            return y * 2 + outer + inner;
+        }(x) + 3 + outer;
+    }(5);
+
+    std::cout << "testLambda:\n";
+    std::cout << "\tm = " << m << std::endl;
 }
 
 /*
@@ -185,13 +203,14 @@ TEST_F(TestCpp, testMallocInfo) {
 
 int main()
 {
-    testStaticArrayInitialization();
-    testTypedefIntAndPointer();
-    testClassStaticMember();
-    testLong2Unsigned();
-    testRvalueReferences();
-    testThreadConcurrency();
-    testMakeHeapFromVector();
+    //testStaticArrayInitialization();
+    //testTypedefIntAndPointer();
+    //testClassStaticMember();
+    //testLong2Unsigned();
+    //testRvalueReferences();
+    //testThreadConcurrency();
+    //testMakeHeapFromVector();
+    testLambda();
 
     return 0;
 }
