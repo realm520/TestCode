@@ -1,6 +1,9 @@
 #include <iostream>
 #include <malloc.h>
-#include <gtest/gtest.h>
+#include <thread>
+#include <vector>
+#include <algorithm>
+#include "RvalueReferences.h"
 
 long bssVar;
 
@@ -19,18 +22,33 @@ private:
 
 int parent::a = 10;
 
+// std::make_heap - 基于一个范围构造一个堆
+// std::pop_heap  - 将堆中第一个元素（最大值）放到last-1的位置，也就是vector的最后，剩余的值继续保持堆得顺序
+// std::push_heap - 将vector中新插入的值插入到堆中
 
-class TestCpp : public testing::Test {
-protected:
-    virtual void SetUp() {
+void printVector(std::vector<int> &vec)
+{
+    for (auto v : vec)
+    {
+        std::cout << v << ", ";
     }
+    std::cout << std::endl;
+}
 
-    virtual void TearDown() {
-    }
-};
+void testMakeHeapFromVector()
+{
+    std::vector<int> ints = { 1, 20, 7, 30, 12, 50, 17, 24 };
+    printVector(ints);
+    std::make_heap(ints.begin(), ints.end());
+    printVector(ints);
+    std::push_heap(ints.begin(), ints.end());
+    printVector(ints);
+}
 
-TEST_F(TestCpp, testStaticArrayInitialization) {
-    typedef struct person {
+void testStaticArrayInitialization()
+{
+    typedef struct person
+    {
         char name[20];
         int dead;
     } Per;
@@ -40,35 +58,65 @@ TEST_F(TestCpp, testStaticArrayInitialization) {
         {"lxh", 3}
     };
 
-    EXPECT_STREQ("ztzhang", few[0].name);
-    EXPECT_EQ(1, few[0].dead);
-    EXPECT_STREQ("lxh", few[1].name);
-    EXPECT_EQ(3, few[1].dead);
+    std::cout << "testStaticArrayInitialization:\n";
+    std::cout << "\tfew[0].name = " << few[0].name << std::endl;
+    std::cout << "\tfew[0].dead = " << few[0].dead << std::endl;
+    std::cout << "\tfew[1].name = " << few[1].name << std::endl;
+    std::cout << "\tfew[1].dead = " << few[1].dead << std::endl;
 }
 
-TEST_F(TestCpp, testTypedefIntAndPointer) {
+void testTypedefIntAndPointer()
+{
     typedef int a, *b, c;
     a x1 = 10;
     b x2 = &x1;
     c x3 = *x2;
 
-    EXPECT_EQ(10, x1);
-    EXPECT_EQ(10, *x2);
-    EXPECT_EQ(10, x3);
+    std::cout << "testTypedefIntAndPointer:\n";
+    std::cout << "\ttype of x1: " << typeid(x1).name() << std::endl;
+    std::cout << "\ttype of x2: " << typeid(x2).name() << std::endl;
+    std::cout << "\ttype of x3: " << typeid(x3).name() << std::endl;
 }
 
-TEST_F(TestCpp, testClassStaticMember) {
-    EXPECT_EQ(10, parent::getA());
+void testClassStaticMember()
+{
+    std::cout << "testTypedefIntAndPointer:\n";
+    std::cout << "\tparent::getA():" << parent::getA() << std::endl;
     parent::increase();
-    EXPECT_EQ(11, parent::getA());
+    std::cout << "\tparent::getA() after increase:" << parent::getA() << std::endl;
 }
 
-TEST_F(TestCpp, testLong2Unsigned) {
+void testLong2Unsigned()
+{
     long l = -1;
     unsigned int u = l;
-    EXPECT_EQ(-1l, u);
+
+    std::cout << "testTypedefIntAndPointer:\n";
+    std::cout << "\tunsigned int of -1l: " << u << std::endl;
 }
 
+void testRvalueReferences()
+{
+    std::string up("up");
+    const std::string down("down");
+    quark(up);                          // 形参T&&, 实参是A型左值, 参数被推导为A&, T&& + & => T&
+    quark(down);                        // 形参T&&, 实参是const A型左值, 参数被推导为const A&, T&& + & => T&
+    quark(strange());
+    quark(charm());
+
+    //quantum(up);
+    //quantum(down);
+    quantum(strange());
+    quantum(charm());
+}
+
+void testThreadConcurrency()
+{
+    //输出CPU数量
+    std::cout << "Thread concurrency: " << std::thread::hardware_concurrency() << std::endl;
+}
+
+/*
 TEST_F(TestCpp, testHeapBssGap) {
     std::cout << "Program break (init): " << (long)sbrk(0) << std::endl;
     void *p = malloc(32);
@@ -132,3 +180,18 @@ TEST_F(TestCpp, testMallocInfo) {
     std::cout << "arena: " << mInfo.arena << " Non-mmapped space allocated (bytes)" << std::endl;
 }
 
+*/
+
+
+int main()
+{
+    testStaticArrayInitialization();
+    testTypedefIntAndPointer();
+    testClassStaticMember();
+    testLong2Unsigned();
+    testRvalueReferences();
+    testThreadConcurrency();
+    testMakeHeapFromVector();
+
+    return 0;
+}
