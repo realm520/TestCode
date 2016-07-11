@@ -117,6 +117,13 @@ void testThreadConcurrency()
     std::cout << "\tThread concurrency: " << std::thread::hardware_concurrency() << std::endl;
 }
 
+void testSignUnsign()
+{
+    int i = -2000;
+    unsigned u = 1000;
+    std::cout << u + i << std::endl;
+}
+
 void testLambda()
 {
     //嵌套的内部lambda表达式可以抓取最外部的变量
@@ -210,7 +217,8 @@ int main()
     //testRvalueReferences();
     //testThreadConcurrency();
     //testMakeHeapFromVector();
-    testLambda();
+    //testLambda();
+    testSignUnsign();
 
     return 0;
 }
