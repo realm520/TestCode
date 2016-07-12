@@ -35,6 +35,7 @@ void printVector(std::vector<int> &vec)
     std::cout << std::endl;
 }
 
+
 void testMakeHeapFromVector()
 {
     std::vector<int> ints = { 1, 20, 7, 30, 12, 50, 17, 24 };
@@ -121,7 +122,8 @@ void testSignUnsign()
 {
     int i = -2000;
     unsigned u = 1000;
-    std::cout << u + i << std::endl;
+    unsigned r = u + i;
+    std::cout << "unsigned 1000 plus signed -2000 is equal to: " << r << std::endl;
 }
 
 void testLambda()
