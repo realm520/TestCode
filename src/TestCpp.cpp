@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include "RvalueReferences.h"
+#include "test_std_limits.h"
 
 long bssVar;
 
@@ -92,7 +93,7 @@ void testLong2Unsigned()
     long l = -1;
     unsigned int u = l;
 
-    std::cout << "testTypedefIntAndPointer:\n";
+    std::cout << "testLong2Unsigned:\n";
     std::cout << "\tunsigned int of -1l: " << u << std::endl;
 }
 
@@ -123,7 +124,8 @@ void testSignUnsign()
     int i = -2000;
     unsigned u = 1000;
     unsigned r = u + i;
-    std::cout << "unsigned 1000 plus signed -2000 is equal to: " << r << std::endl;
+    std::cout << "testSignUnsign:\n";
+    std::cout << "\tunsigned 1000 plus signed -2000 is equal to: " << r << std::endl;
 }
 
 void testLambda()
@@ -215,12 +217,14 @@ int main()
     //testStaticArrayInitialization();
     //testTypedefIntAndPointer();
     //testClassStaticMember();
-    //testLong2Unsigned();
+    testLong2Unsigned();
     //testRvalueReferences();
     //testThreadConcurrency();
     //testMakeHeapFromVector();
     //testLambda();
     testSignUnsign();
+    testMaxMin();
+    testNumberCheck();
 
     return 0;
 }

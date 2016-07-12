@@ -18,9 +18,18 @@
     <ClCompile Include="..\..\src\TestCpp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\TestStl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\test_std_limits.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\RvalueReferences.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\test_std_limits.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

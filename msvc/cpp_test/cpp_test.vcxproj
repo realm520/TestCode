@@ -83,9 +83,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\TestCpp.cpp" />
+    <ClCompile Include="..\..\src\TestStl.cpp" />
+    <ClCompile Include="..\..\src\test_std_limits.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\RvalueReferences.h" />
+    <ClInclude Include="..\..\src\test_std_limits.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

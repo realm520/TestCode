@@ -1,17 +1,9 @@
-#include <gtest/gtest.h>
 #include <memory>
 #include <iostream>
 
-class TestStl : public testing::Test {
-protected:
-    virtual void SetUp() {
-    }
 
-    virtual void TearDown() {
-    }
-};
-
-TEST_F(TestStl, testConfig) {
+void testConfig()
+{
 #   if defined(__sgi)
     EXPECT_STREQ("__sgi", __sgi);
 std::cout << "__sgi" << std::endl;
@@ -23,6 +15,7 @@ std::cout << "__sgi" << std::endl;
 #   endif
 }
 
+/*
 template <typename T>
 class StaticMemberTemplateClass {
 public:
@@ -120,4 +113,4 @@ TEST_F(TestStl, testAutoPtr) {
 //}, ::testing::ExitedWithCode(134), "");
     }, ::testing::KilledBySignal(6), "pointer being freed was not allocated");
 }
-
+*/

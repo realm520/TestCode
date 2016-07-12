@@ -1,0 +1,2 @@
+void testMaxMin();
+void testNumberCheck();
