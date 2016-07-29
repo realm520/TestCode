@@ -24,12 +24,18 @@
     <ClCompile Include="..\..\src\test_std_limits.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\bloom_filter_c.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\RvalueReferences.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\test_std_limits.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\bloom_filter_c.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,9 @@
 #include <algorithm>
 #include "RvalueReferences.h"
 #include "test_std_limits.h"
+#include "bloom_filter_c.h"
+
+
 
 long bssVar;
 
@@ -145,6 +148,15 @@ void testLambda()
     std::cout << "\tm = " << m << std::endl;
 }
 
+void testFloatPrecision()
+{
+    std::cout << "testFloatPrecision:\n";
+    std::cout << "\t1.01 + 2.01 == 3.02: " << (1.01 + 2.01 == 3.02) << std::endl;
+    std::cout << "\t0.05 + 0.01: " << 0.05 + 0.01 << std::endl;
+    double d0 = 0.0;
+    std::cout << "\t0.0 == 0.0: " << (d0 == 0.0) << std::endl;
+}
+
 /*
 TEST_F(TestCpp, testHeapBssGap) {
     std::cout << "Program break (init): " << (long)sbrk(0) << std::endl;
@@ -225,6 +237,8 @@ int main()
     testSignUnsign();
     testMaxMin();
     testNumberCheck();
+    testFloatPrecision();
+    testBloomFilter();
 
     return 0;
 }

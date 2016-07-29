@@ -18,5 +18,8 @@
     <ClCompile Include="..\..\src\wintest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="test_post_msg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

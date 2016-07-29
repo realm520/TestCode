@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -82,11 +82,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\bloom_filter_c.cpp" />
     <ClCompile Include="..\..\src\TestCpp.cpp" />
     <ClCompile Include="..\..\src\TestStl.cpp" />
     <ClCompile Include="..\..\src\test_std_limits.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\bloom_filter_c.h" />
     <ClInclude Include="..\..\src\RvalueReferences.h" />
     <ClInclude Include="..\..\src\test_std_limits.h" />
   </ItemGroup>

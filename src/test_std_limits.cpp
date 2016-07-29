@@ -14,6 +14,9 @@ void testMaxMin()
     std::cout << "\tstd::numeric_limits<long>::max(): " << std::numeric_limits<long>::max() << std::endl;
     std::cout << "\tstd::numeric_limits<long>::min(): " << std::numeric_limits<long>::min() << std::endl;
 
+    std::cout << "\tstd::numeric_limits<long long>::max(): " << std::numeric_limits<long long>::max() << std::endl;
+    std::cout << "\tstd::numeric_limits<long long>::min(): " << std::numeric_limits<long long>::min() << std::endl;
+
     std::cout << "\tstd::numeric_limits<float>::max(): " << std::numeric_limits<float>::max() << std::endl;
     std::cout << "\tstd::numeric_limits<float>::min(): " << std::numeric_limits<float>::min() << std::endl;
 
