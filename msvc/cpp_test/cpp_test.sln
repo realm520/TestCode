@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp_test", "cpp_test.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wintest", "..\wintest\wintest.vcxproj", "{95FE8AA9-B04A-431C-B9B1-FDD52505741A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dummy_process", "..\dump_process\dump_process.vcxproj", "{629A8A5A-4580-4D75-8070-E6CFB308F7D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{95FE8AA9-B04A-431C-B9B1-FDD52505741A}.Debug|Win32.Build.0 = Debug|Win32
 		{95FE8AA9-B04A-431C-B9B1-FDD52505741A}.Release|Win32.ActiveCfg = Release|Win32
 		{95FE8AA9-B04A-431C-B9B1-FDD52505741A}.Release|Win32.Build.0 = Release|Win32
+		{629A8A5A-4580-4D75-8070-E6CFB308F7D8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{629A8A5A-4580-4D75-8070-E6CFB308F7D8}.Debug|Win32.Build.0 = Debug|Win32
+		{629A8A5A-4580-4D75-8070-E6CFB308F7D8}.Release|Win32.ActiveCfg = Release|Win32
+		{629A8A5A-4580-4D75-8070-E6CFB308F7D8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

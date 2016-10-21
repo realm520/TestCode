@@ -4,9 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include "RvalueReferences.h"
-#include "test_std_limits.h"
-#include "bloom_filter_c.h"
-
 
 
 long bssVar;
@@ -224,21 +221,3 @@ TEST_F(TestCpp, testMallocInfo) {
 */
 
 
-int main()
-{
-    //testStaticArrayInitialization();
-    //testTypedefIntAndPointer();
-    //testClassStaticMember();
-    testLong2Unsigned();
-    //testRvalueReferences();
-    //testThreadConcurrency();
-    //testMakeHeapFromVector();
-    //testLambda();
-    testSignUnsign();
-    testMaxMin();
-    testNumberCheck();
-    testFloatPrecision();
-    testBloomFilter();
-
-    return 0;
-}

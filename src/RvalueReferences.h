@@ -1,3 +1,6 @@
+#ifndef __RVALUE_REFERENCES_H__
+#define __RVALUE_REFERENCES_H__
+
 #include <string>
 
 /*
@@ -85,3 +88,5 @@ const std::string charm()
 {
     return "charm()";
 }
+
+#endif

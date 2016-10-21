@@ -83,14 +83,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\bloom_filter_c.cpp" />
-    <ClCompile Include="..\..\src\TestCpp.cpp" />
+    <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\test_cpp.cpp" />
     <ClCompile Include="..\..\src\TestStl.cpp" />
+    <ClCompile Include="..\..\src\test_file.cpp" />
+    <ClCompile Include="..\..\src\test_future.cpp" />
     <ClCompile Include="..\..\src\test_std_limits.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\bloom_filter_c.h" />
     <ClInclude Include="..\..\src\RvalueReferences.h" />
+    <ClInclude Include="..\..\src\test_cpp.h" />
+    <ClInclude Include="..\..\src\test_file.h" />
+    <ClInclude Include="..\..\src\test_future.h" />
     <ClInclude Include="..\..\src\test_std_limits.h" />
+    <ClInclude Include="test_future.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
